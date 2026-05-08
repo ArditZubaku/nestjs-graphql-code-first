@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Flavor } from "./flavor.entity";
 
 // Mark this class as a GQL type
 @ObjectType({ description: "Coffee model" })
@@ -19,6 +20,7 @@ export class Coffee {
   // we would have to declare each Field like this
   // the plugin does that for us at compile time
   // @Field(() => [String])
-  @Column({ type: "json" })
-  flavors: string[];
+  @JoinTable()
+  @ManyToMany(() => Flavor, (flavor) => flavor.coffees, { cascade: true })
+  flavors?: Flavor[];
 }

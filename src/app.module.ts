@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { CoffeesModule } from './coffees/coffees.module';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CoffeeFlavorsResolver } from './coffes/coffee-flavors.resolver';
 
 @Module({
   imports: [
@@ -37,6 +38,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     CoffeesModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CoffeeFlavorsResolver],
 })
 export class AppModule { }
