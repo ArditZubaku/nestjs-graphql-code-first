@@ -1,12 +1,13 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Flavor } from "./flavor.entity";
+import { Drink } from "src/common/interfaces/drink.interface";
 
 // Mark this class as a GQL type
-@ObjectType({ description: "Coffee model" })
+@ObjectType({ description: "Coffee model", implements: () => Drink })
 // Mark this class as a table
 @Entity()
-export class Coffee {
+export class Coffee implements Drink {
   @PrimaryGeneratedColumn()
   @Field(() => ID, { description: "A unique identifier" })
   id: number;
