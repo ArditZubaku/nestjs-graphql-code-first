@@ -1,14 +1,16 @@
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { Coffee } from './entities/coffee.entity';
 import { ParseIntPipe } from '@nestjs/common';
 import { CreateCoffeeInput } from './dto/create-coffee.input';
 import { CoffeesService } from './coffees.service';
 import { UpdateCoffeeInput } from './dto/update-coffee.input';
+import { PubSub } from 'graphql-subscriptions';
 
 @Resolver()
 export class CoffeesResolver {
   constructor(
     private readonly coffeeService: CoffeesService,
+    private readonly pubSub: PubSub,
   ) { }
 
   // declare what will the SDL look like, what will this resolver return
@@ -44,5 +46,10 @@ export class CoffeesResolver {
     @Args("id", ParseIntPipe) id: number,
   ) {
     return this.coffeeService.delete(id);
+  }
+
+  @Subscription(() => Coffee)
+  coffeeAdded() {
+    return this.pubSub.asyncIterableIterator("coffeeAdded")
   }
 }

@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DateScalar } from './common/scalars/date.scalar';
 import { Tea } from './coffees/entities/tea.entity';
 import { DrinksResolver } from './drinks/drinks.resolver';
+import { PubSubModule } from './pub-sub/pub-sub.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { DrinksResolver } from './drinks/drinks.resolver';
       // }
       buildSchemaOptions: {
         orphanedTypes: [Tea]
-      }
+      },
+      installSubscriptionHandlers: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -41,7 +43,8 @@ import { DrinksResolver } from './drinks/drinks.resolver';
       autoLoadEntities: true,
       logging: true,
     }),
-    CoffeesModule
+    CoffeesModule,
+    PubSubModule
   ],
   controllers: [AppController],
   providers: [AppService, DateScalar, DrinksResolver],
