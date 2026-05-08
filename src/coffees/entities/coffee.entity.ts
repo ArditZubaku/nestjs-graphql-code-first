@@ -3,6 +3,7 @@ import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGenerat
 import { Flavor } from "./flavor.entity";
 import { Drink } from "src/common/interfaces/drink.interface";
 import { CoffeeType } from "src/common/enums/coffee-type.enum";
+import { loggerMiddleware } from "src/common/middlewares/logger.middleware";
 
 // Mark this class as a GQL type
 @ObjectType({ description: "Coffee model", implements: () => Drink })
@@ -13,6 +14,10 @@ export class Coffee implements Drink {
   @Field(() => ID, { description: "A unique identifier" })
   id: number;
 
+  @Field({
+    // order matters here
+    middleware: [loggerMiddleware],
+  })
   @Column()
   name: string;
 

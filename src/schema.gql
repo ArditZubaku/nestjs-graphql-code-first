@@ -9,24 +9,41 @@ type Flavor {
 }
 
 """Coffee model"""
-type Coffee {
+type Coffee implements Drink {
+  name: String!
+
   """A unique identifier"""
   id: ID!
-  name: String!
   brand: String!
   flavors: [Flavor!]
-  createdAt: Timestamp
+  createdAt: Date
+  type: CoffeeType
 }
 
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
+interface Drink {
+  name: String!
+}
+
+"""Types of coffee"""
+enum CoffeeType {
+  ARABICA
+  ROBUSTA
+}
+
+type Tea implements Drink {
+  name: String!
+}
+
+"""Date custom scalar type"""
+scalar Date
 
 type Query {
+  drinks: [DrinksResult!]!
   coffees: [Coffee!]!
   coffee(id: ID!): Coffee!
 }
+
+union DrinksResult = Coffee | Tea
 
 type Mutation {
   createCoffee(createCoffeeInput: CreateCoffeeInput!): Coffee!
@@ -40,6 +57,7 @@ input CreateCoffeeInput {
   name: String!
   brand: String!
   flavors: [String!]!
+  type: CoffeeType!
 }
 
 input UpdateCoffeeInput {
@@ -47,4 +65,5 @@ input UpdateCoffeeInput {
   name: String
   brand: String
   flavors: [String!]
+  type: CoffeeType
 }
