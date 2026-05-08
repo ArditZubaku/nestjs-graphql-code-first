@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Flavor } from "./flavor.entity";
 import { Drink } from "src/common/interfaces/drink.interface";
+import { CoffeeType } from "src/common/enums/coffee-type.enum";
 
 // Mark this class as a GQL type
 @ObjectType({ description: "Coffee model", implements: () => Drink })
@@ -27,4 +28,7 @@ export class Coffee implements Drink {
 
   @CreateDateColumn()
   createdAt?: Date;
+
+  @Column({ nullable: true, type: "enum", enum: CoffeeType })
+  type?: CoffeeType;
 }
