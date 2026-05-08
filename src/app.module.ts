@@ -9,6 +9,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DateScalar } from './common/scalars/date.scalar';
 import { Tea } from './coffees/entities/tea.entity';
+import { DrinksResolver } from './drinks/drinks.resolver';
 
 @Module({
   imports: [
@@ -43,6 +44,6 @@ import { Tea } from './coffees/entities/tea.entity';
     CoffeesModule
   ],
   controllers: [AppController],
-  providers: [AppService, DateScalar],
+  providers: [AppService, DateScalar, DrinksResolver],
 })
 export class AppModule { }
