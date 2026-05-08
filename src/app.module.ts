@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { CoffeesModule } from './coffees/coffees.module';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CoffeeFlavorsResolver } from './coffes/coffee-flavors.resolver';
+import { DateScalar } from './common/scalars/date.scalar';
 
 @Module({
   imports: [
@@ -18,8 +18,9 @@ import { CoffeeFlavorsResolver } from './coffes/coffee-flavors.resolver';
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
       playground: false, // turn it off if we want to get the ApolloStudio sandbox
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      // numberScalarMode: "integer",
       // buildSchemaOptions: {
-      //   numberScalarMode: "integer",
+      // dateScalarMode: "timestamp",
       // }
     }),
     TypeOrmModule.forRoot({
@@ -38,6 +39,6 @@ import { CoffeeFlavorsResolver } from './coffes/coffee-flavors.resolver';
     CoffeesModule
   ],
   controllers: [AppController],
-  providers: [AppService, CoffeeFlavorsResolver],
+  providers: [AppService, DateScalar],
 })
 export class AppModule { }

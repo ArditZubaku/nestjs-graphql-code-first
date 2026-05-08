@@ -10,6 +10,14 @@ services:
       POSTGRES_DB: mydb
     volumes:
         - pgdata:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
 
 volumes:
   pgdata:
