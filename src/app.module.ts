@@ -8,6 +8,7 @@ import { CoffeesModule } from './coffees/coffees.module';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DateScalar } from './common/scalars/date.scalar';
+import { Tea } from './coffees/entities/tea.entity';
 
 @Module({
   imports: [
@@ -22,6 +23,9 @@ import { DateScalar } from './common/scalars/date.scalar';
       // buildSchemaOptions: {
       // dateScalarMode: "timestamp",
       // }
+      buildSchemaOptions: {
+        orphanedTypes: [Tea]
+      }
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
